@@ -9,8 +9,10 @@
     <form id="addHolidayForm">
         <label for="holidayName">Holiday Name:</label>
         <input type="text" id="holidayName" required>
+        <span id="holidayNameError" style="color: red;"></span>
         <label for="holidayDate">Holiday Date:</label>
         <input type="date" id="holidayDate" required>
+        <span id="holidayDateError" style="color: red;"></span>
         <button type="submit">Add Holiday</button>
     </form>
 
@@ -43,8 +45,24 @@
             $('#addHolidayForm').submit(function(event) {
                 event.preventDefault();
 
+                // Clear previous errors
+                $('#holidayNameError').text('');
+                $('#holidayDateError').text('');
+
                 var holidayName = $('#holidayName').val();
                 var holidayDate = $('#holidayDate').val();
+
+                // Validate holiday name
+                if (holidayName.trim() === '') {
+                    $('#holidayNameError').text('Holiday name is required.');
+                    return;
+                }
+
+                // Validate holiday date
+                if (holidayDate.trim() === '') {
+                    $('#holidayDateError').text('Holiday date is required.');
+                    return;
+                }
 
                 var newRow = {
                     "date": holidayDate,
